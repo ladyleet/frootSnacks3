@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { fromEvent } from 'rxjs/observable/fromEvent';
+import { fromEvent } from 'rxjs/Observable/fromEvent';
 import { BehaviorSubject, Observable } from 'rxjs/Rx';
 import { map, scan } from 'rxjs/operators';
 
