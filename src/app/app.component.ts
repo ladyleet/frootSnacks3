@@ -1,40 +1,46 @@
 import { Component } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import { fromEvent } from 'rxjs/Observable/fromEvent';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/operator/map';
-import { fromEvent } from 'rxjs/observable/fromEvent';
 import { IncrementComponent } from './increment/increment.component';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
-  
-  draggable = document.getElementById('froot-snack');
+    title = 'app';
+    
+    draggable: any;
+    mouseDown$ = Observable.fromEvent(document, 'mousedown');
+    mouseMove$ = Observable.fromEvent(document, 'mousemove');
+    mouseUp$ = Observable.fromEvent(document, 'mouseup');
 
-  const mouseDown$ = Observable.fromEvent(document, 'mousedown');
-  const mouseMove$ = Observable.fromEvent(document, 'mousemove');
-  const mouseUp$ = Observable.fromEvent(document, 'mouseup');
+    mouseDrag$ = this.mouseDown$
+        .mergeMap(({ offsetX: startX, offsetY: startY }) =>
+            this.mouseMove$
+                .do((mouseMoveEvent: any) => {
+                    mouseMoveEvent.preventDefault()
+                })
+                .map(mouseMoveEvent => ({
+                    left: mouseMoveEvent.clientX - startX,
+                    top: mouseMoveEvent.clientY - startY
+                }))
+                .takeUntil(this.mouseUp$)
+        );
 
-  const mouseDrag$ = this.mouseDown$
-  .mergeMap(({ offsetX: startX, offsetY: startY }) =>
-    this.mouseMove$
-      .do(mouseMoveEvent => mouseMoveEvent.preventDefault())
-      .map(mouseMoveEvent => ({
-        left: mouseMoveEvent.clientX - startX,
-        top: mouseMoveEvent.clientY - startY
-      }))
-      .takeUntil(mouseUp$)
-  );
+    constructor() {
+        this.mouseDrag$.subscribe((position: any) => {
+            this.draggable.style.top = `${position.top}px`;
+            this.draggable.style.left = `${position.left}px`;
+        });
+    }
 
-  mouseDrag$.subscribe(position => {
-    document.style.top = position.top + 'px',
-    document.style.left = position.left + 'px',
-});
-
+  ngAfterViewInit() {
+     this.draggable = document.getElementById('froot-snack');
+  }
 }

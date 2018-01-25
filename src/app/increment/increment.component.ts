@@ -15,11 +15,11 @@ export class IncrementComponent implements OnInit {
   ngOnInit() {
   }
 
-  const inc = document.querySelector('inc');
-  const dec = document.querySelector('dec');
-  const output = document.querySelector('output');
+  inc = document.querySelector('inc');
+  dec = document.querySelector('dec');
+  output = document.querySelector('output');
 
-  const action$ = new BehaviorSubject(0);
+  action$ = new BehaviorSubject(0);
 
   // Observable.fromEvent(inc, 'click').pipe(
   //   map(() => ({ type: 'INCREMENT' }))
