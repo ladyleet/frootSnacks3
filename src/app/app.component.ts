@@ -16,31 +16,32 @@ export class AppComponent {
     title = 'app';
     
     draggable: any;
+    target: any;
     mouseDown$ = Observable.fromEvent(document, 'mousedown');
     mouseMove$ = Observable.fromEvent(document, 'mousemove');
-    mouseUp$ = Observable.fromEvent(document, 'mouseup');
 
     mouseDrag$ = this.mouseDown$
-        .mergeMap(({ offsetX: startX, offsetY: startY }) =>
+        .mergeMap((event) =>
             this.mouseMove$
                 .do((mouseMoveEvent: any) => {
                     mouseMoveEvent.preventDefault()
                 })
                 .map(mouseMoveEvent => ({
-                    left: mouseMoveEvent.clientX - startX,
-                    top: mouseMoveEvent.clientY - startY
+                    proposedLeft: mouseMoveEvent.clientX - event.offsetX,
+                    proposedTop: mouseMoveEvent.clientY - event.offsetY,
+                    target: event.target
                 }))
-                .takeUntil(this.mouseUp$)
+                .takeUntil(Observable.fromEvent(event.target, 'mouseup'))
         );
 
     constructor() {
-        this.mouseDrag$.subscribe((position: any) => {
-            this.draggable.style.top = `${position.top}px`;
-            this.draggable.style.left = `${position.left}px`;
+        this.mouseDrag$.subscribe((dragEvent: any) => {
+          dragEvent.target.style.top = dragEvent.proposedTop + 'px';
+          dragEvent.target.style.left = dragEvent.proposedLeft + 'px';
         });
     }
 
   ngAfterViewInit() {
-     this.draggable = document.getElementById('froot-snack');
+     this.draggable = document.querySelectorAll('.draggable');
   }
 }
