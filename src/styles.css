@@ -3,3 +3,15 @@
 body {
   font-family: 'Roboto', sans-serif;
 }
+
+#froot-snack {
+  width: 100px;
+  position: absolute;
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+
+#jay:active {
+  cursor: -webkit-grabbing;
+  cursor: grabbing;
+}

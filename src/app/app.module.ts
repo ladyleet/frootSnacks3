@@ -4,10 +4,12 @@ import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material';
 import { AppComponent } from './app.component';
 import 'hammerjs';
+import { IncrementComponent } from './increment/increment.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    IncrementComponent
   ],
   imports: [
     BrowserModule,
