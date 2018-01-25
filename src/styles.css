@@ -5,13 +5,15 @@ body {
 }
 
 #froot-snack {
-  width: 100px;
+  width: 60px;
+  right: 500px;
+  top: 340px;
   position: absolute;
   cursor: -webkit-grab;
   cursor: grab;
 }
 
-#jay:active {
+#froot-snack:active {
   cursor: -webkit-grabbing;
   cursor: grabbing;
 }
