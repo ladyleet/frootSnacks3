@@ -2,4 +2,23 @@
 
 body {
   font-family: 'Roboto', sans-serif;
+  margin: 0px;
+}
+
+.body-margin {
+  margin: 50px;
+}
+
+#froot-snack {
+  width: 60px;
+  right: 455px;
+  top: 358px;
+  position: absolute;
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+
+#froot-snack:active {
+  cursor: -webkit-grabbing;
+  cursor: grabbing;
 }
