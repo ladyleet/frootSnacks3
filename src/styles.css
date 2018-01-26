@@ -11,7 +11,7 @@ body {
 
 .froot-snack {
   width: 60px;
-  right: 455px;
+  left: 455px;
   top: 358px;
   position: absolute;
   cursor: -webkit-grab;
