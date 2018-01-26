@@ -9,7 +9,7 @@ body {
   margin: 50px;
 }
 
-#froot-snack {
+.froot-snack {
   width: 60px;
   right: 455px;
   top: 358px;
@@ -18,7 +18,7 @@ body {
   cursor: grab;
 }
 
-#froot-snack:active {
+.froot-snack:active {
   cursor: -webkit-grabbing;
   cursor: grabbing;
 }

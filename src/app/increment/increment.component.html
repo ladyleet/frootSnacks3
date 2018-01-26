@@ -1,3 +1,5 @@
 <button mat-raised-button (click)="inc()">Count the # of froot snacks you've fed Jay</button>
 <button mat-raised-button (click)="dec()">decrement</button>
-{{output | async}}
+
+<p>You have fed Jay _{{output | async}}_ froot snacks.</p>
+
