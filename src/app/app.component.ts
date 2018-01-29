@@ -2,11 +2,7 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { Subscription} from 'rxjs/Subscription';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/takeUntil';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/filter';
+import { tap, mergeMap, takeUntil, map, filter} from 'rxjs/operators';
 import { IncrementComponent } from './increment/increment.component';
 
 @Component({
@@ -22,22 +18,25 @@ export class AppComponent {
   mouseMove$ = fromEvent(document, 'mousemove');
   mouseUp$ = fromEvent(document, 'mouseup');
   
-  targetMouseDown$ = this.mouseDown$
-    .filter((e: any) => e.target.matches('.froot-snack'))
+  targetMouseDown$ = this.mouseDown$.pipe(
+    filter((e: any) => e.target.matches('.froot-snack'))
+  )
   
-    mouseDrag$ = this.targetMouseDown$
-    .mergeMap(({ target: draggable, offsetX: startX, offsetY: startY }) =>
-      this.mouseMove$
-        .do((mouseMoveEvent: any) => {
+    mouseDrag$ = this.targetMouseDown$.pipe(
+    mergeMap(({ target: draggable, offsetX: startX, offsetY: startY }) =>
+      this.mouseMove$.pipe(
+        tap((mouseMoveEvent: any) => {
           mouseMoveEvent.preventDefault()
-        })
-        .map(mouseMoveEvent => ({
+        }),
+        map(mouseMoveEvent => ({
           left: mouseMoveEvent.clientX - startX,
           top: mouseMoveEvent.clientY - startY,
           draggable
-        }))
-        .takeUntil(this.mouseUp$)
-    );
+        })),
+        takeUntil(this.mouseUp$)
+      )
+    )
+  );
 
   constructor() {
 
