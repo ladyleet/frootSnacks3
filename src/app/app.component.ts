@@ -53,3 +53,7 @@ export class AppComponent {
     this.subscription.unsubscribe();
   }
 }
+
+// function isInJaysMouth(x: number, y: number) {
+//   return x > 200 && x < 300 && y > 300 && y < 400
+// };
